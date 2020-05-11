@@ -1,0 +1,9 @@
+torch
+torchvision
+matplotlib
+numpy
+pandas
+zipfile
+wget
+PIL
+

@@ -1,5 +1,7 @@
 import os
 import sys
+import wget
+import zipfile
 import numpy as np
 import pandas as pd
 pd.options.mode.chained_assignment = None
@@ -15,6 +17,17 @@ from PIL import Image
 
 from architectures import *
 from helper import *
+
+##############################
+#        GET DATA            # 
+##############################
+
+url = "https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/monet2photo.zip"
+wget.download(url, "../../../../Data/")
+
+with zipfile.ZipFile("../../../../Data/monet2photo.zip", 'r') as zip_ref:
+    zip_ref.extractall("../../../../Data/")
+
 
 ##############################
 #    MODEL CONFIGURATION     # 
