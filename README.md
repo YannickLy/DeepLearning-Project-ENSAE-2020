@@ -1,1 +1,1 @@
-# DeepLearning-Project
+# Implementation of a cycleGAN and a DCGAN

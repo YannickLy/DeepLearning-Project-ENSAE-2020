@@ -6,4 +6,3 @@ pandas
 zipfile
 wget
 PIL
-
