@@ -35,7 +35,7 @@ with zipfile.ZipFile("../../../../Data/monet2photo.zip", 'r') as zip_ref:
 parser = argparse.ArgumentParser()
 # data set
 parser.add_argument("--dataset_name", type=str, default="monet2photo", help="name of the dataset")
-parser.add_argument("--img_size", type=int, default=64, help="size of each image dimension")
+parser.add_argument("--img_size", type=int, default=256, help="size of each image dimension")
 parser.add_argument("--channels", type=int, default=3, help="number of image channels")
 # cycleGAN parameters
 parser.add_argument("--n_residual_blocks", type=int, default=9, help="number of residual blocks in generator")
