@@ -7,7 +7,7 @@ We decided to apply the DCGAN to generate anime style face.
 We decided to apply the cycleGAN to transform real photographies to Monet's painting and to transform Monet's painting to real photographies.  
 We also tried to apply the cycleGAN to transform MNIST dataset to USPS dataset and vive versa.  
 
-Hardware = RTX 2070
+Hardware = NVIDIA RTX 2070
 
 # DCGAN
 
