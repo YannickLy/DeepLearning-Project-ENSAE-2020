@@ -28,17 +28,15 @@ class Generator(nn.Module):
        Note: Both generators G_XtoY and G_YtoX have the same architecture in this assignment.
     """
 
-    def __init__(self, input_shape, num_residual_blocks = 1):
+    def __init__(self, opt):
         super(Generator, self).__init__()
-
-        channels, height, width = input_shape
 
         # Initial convolution block (first convolutional layer)
         out_features = 64
         model = [
             # Pads the input tensor using the reflection of the input boundary
-            nn.ReflectionPad2d(channels),
-            nn.Conv2d(channels, out_features, 7),
+            nn.ReflectionPad2d(opt.channels),
+            nn.Conv2d(opt.channels, out_features, 7),
             # Applies Instance Normalization over a 4D input
             nn.InstanceNorm2d(out_features),
             nn.ReLU(inplace=True),
@@ -56,7 +54,7 @@ class Generator(nn.Module):
             in_features = out_features
 
         # Residual blocks
-        for _ in range(num_residual_blocks):
+        for _ in range(opt.n_residual_blocks):
             model += [ResnetBlock(out_features)]
 
         # Two convolution blocks for upsampling
@@ -72,7 +70,7 @@ class Generator(nn.Module):
             in_features = out_features
 
         # Output layer
-        model += [nn.ReflectionPad2d(channels), nn.Conv2d(out_features, channels, 7), nn.Tanh()]
+        model += [nn.ReflectionPad2d(opt.channels), nn.Conv2d(out_features, opt.channels, 7), nn.Tanh()]
 
         self.model = nn.Sequential(*model)
 
@@ -85,13 +83,11 @@ class Discriminator(nn.Module):
        Note: Both discriminators D_X and D_Y have the same architecture in this assignment.
     """
     
-    def __init__(self, input_shape):
+    def __init__(self, opt):
         super(Discriminator, self).__init__()
 
-        channels, height, width = input_shape
-
         # Calculate output shape of image discriminator
-        self.output_shape = (1, height // 2 ** 4, width // 2 ** 4)
+        self.output_shape = (1, opt.img_size // 2 ** 4, opt.img_size // 2 ** 4)
 
         def discriminator_block(in_filters, out_filters, normalize = True):
             layers = [nn.Conv2d(in_filters, out_filters, 4, stride = 2, padding = 1)]
@@ -101,7 +97,7 @@ class Discriminator(nn.Module):
             return layers
 
         self.model = nn.Sequential(
-            *discriminator_block(channels, 64, normalize = False),
+            *discriminator_block(opt.channels, 64, normalize = False),
             *discriminator_block(64, 128),
             *discriminator_block(128, 256),
             *discriminator_block(256, 512),

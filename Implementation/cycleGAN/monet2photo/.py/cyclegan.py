@@ -28,7 +28,6 @@ wget.download(url, "../../../../Data/")
 with zipfile.ZipFile("../../../../Data/monet2photo.zip", 'r') as zip_ref:
     zip_ref.extractall("../../../../Data/")
 
-
 ##############################
 #    MODEL CONFIGURATION     # 
 ##############################
@@ -36,13 +35,12 @@ with zipfile.ZipFile("../../../../Data/monet2photo.zip", 'r') as zip_ref:
 parser = argparse.ArgumentParser()
 # data set
 parser.add_argument("--dataset_name", type=str, default="monet2photo", help="name of the dataset")
-parser.add_argument("--img_height", type=int, default=256, help="size of image height")
-parser.add_argument("--img_width", type=int, default=256, help="size of image width")
+parser.add_argument("--img_size", type=int, default=64, help="size of each image dimension")
 parser.add_argument("--channels", type=int, default=3, help="number of image channels")
 # cycleGAN parameters
 parser.add_argument("--n_residual_blocks", type=int, default=9, help="number of residual blocks in generator")
 parser.add_argument("--lambda_cyc", type=float, default=10.0, help="cycle loss weight")
-parser.add_argument("--lambda_id", type=float, default=5.0, help="identity loss weight")
+parser.add_argument("--lambda_id", type=float, default=5.0, help="identity loss weight") # identity loss to conserv colors of the pictures
 parser.add_argument("--lr", type=float, default=0.0002, help="adam: learning rate")
 parser.add_argument("--b1", type=float, default=0.3, help="adam: decay of first order momentum of gradient")
 parser.add_argument("--b2", type=float, default=0.999, help="adam: decay of first order momentum of gradient")
@@ -71,9 +69,9 @@ os.makedirs("losses_models", exist_ok = True)
 
 # Image transformations
 transforms_ = [
-    transforms.Resize(int(opt.img_height * 1.12), Image.BICUBIC),
-    # Add some nose into the data
-    transforms.RandomCrop((opt.img_height, opt.img_width)),
+    transforms.Resize(int(opt.img_size * 1.12), Image.BICUBIC),
+    # Add some noise into the data
+    transforms.RandomCrop((opt.img_size, opt.img_size)),
     # Random horizontal flip on image
     transforms.RandomHorizontalFlip(),
     transforms.ToTensor(),
@@ -105,13 +103,11 @@ def create_model(opt):
     
     """ Builds the generators and discriminators. """
     
-    input_shape = (opt.channels, opt.img_height, opt.img_width)
-    
     # Initialize generator and discriminator
-    G_XtoY = Generator(input_shape, opt.n_residual_blocks)
-    G_YtoX = Generator(input_shape, opt.n_residual_blocks)
-    D_X = Discriminator(input_shape)
-    D_Y = Discriminator(input_shape)
+    G_XtoY = Generator(opt)
+    G_YtoX = Generator(opt)
+    D_X = Discriminator(opt)
+    D_Y = Discriminator(opt)
     
     print_models(G_XtoY, G_YtoX, D_X, D_Y)
     

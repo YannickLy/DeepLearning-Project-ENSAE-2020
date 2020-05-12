@@ -26,13 +26,11 @@ from helper import *
 parser = argparse.ArgumentParser()
 # data set
 parser.add_argument("--dataset_name", type=str, default="MNIST2USPS", help="name of the dataset")
-parser.add_argument("--img_height", type=int, default=16, help="size of image height")
-parser.add_argument("--img_width", type=int, default=16, help="size of image width")
+parser.add_argument("--img_size", type=int, default=64, help="size of each image dimension")
 parser.add_argument("--channels", type=int, default=3, help="number of image channels")
 # cycleGAN parameters
-parser.add_argument("--n_residual_blocks", type=int, default=9, help="number of residual blocks in generator")
+parser.add_argument("--n_residual_blocks", type=int, default=1, help="number of residual blocks in generator")
 parser.add_argument("--lambda_cyc", type=float, default=10.0, help="cycle loss weight")
-parser.add_argument("--lambda_id", type=float, default=5.0, help="identity loss weight")
 parser.add_argument("--lr", type=float, default=0.0002, help="adam: learning rate")
 parser.add_argument("--b1", type=float, default=0.3, help="adam: decay of first order momentum of gradient")
 parser.add_argument("--b2", type=float, default=0.999, help="adam: decay of first order momentum of gradient")
@@ -61,24 +59,24 @@ os.makedirs("losses_models", exist_ok = True)
 
 # Image transformations
 transforms_ = [
-    transforms.Resize(int(opt.img_height), Image.BICUBIC),
+    transforms.Resize(int(opt.img_size), Image.BICUBIC),
     # Add some noise into the data
-    transforms.RandomCrop((opt.img_height, opt.img_width)),
+    transforms.RandomCrop((opt.img_size, opt.img_size)),
     transforms.ToTensor(),
 ]
 
 # MNIST datasets
-MNIST_trainset = datasets.MNIST('../../../Data/MNIST',
+MNIST_trainset = datasets.MNIST('../../../../Data/MNIST',
                                 train = True, 
                                 download = True,
-                                transform = transforms.Compose([transforms.Resize(opt.img_height), transforms.ToTensor()]))
-MNIST_testset = datasets.MNIST('../../../Data/MNIST',
+                                transform = transforms.Compose([transforms.Resize(opt.img_size), transforms.ToTensor()]))
+MNIST_testset = datasets.MNIST('../../../../Data/MNIST',
                                train = False,
                                download = True,
-                               transform = transforms.Compose([transforms.Resize(opt.img_height), transforms.ToTensor()]))
+                               transform = transforms.Compose([transforms.Resize(opt.img_size), transforms.ToTensor()]))
 
 # USPS dataset
-with h5py.File('../../../Data/usps.h5', 'r') as hf:
+with h5py.File('../../../../Data/usps.h5', 'r') as hf:
     train = hf.get('train')
     X_train = train.get('data')[:]
     test = hf.get('test')
@@ -116,13 +114,11 @@ def create_model(opt):
     
     """ Builds the generators and discriminators. """
     
-    input_shape = (opt.channels, opt.img_height, opt.img_width)
-    
     # Initialize generator and discriminator
-    G_XtoY = Generator(input_shape, opt.n_residual_blocks)
-    G_YtoX = Generator(input_shape, opt.n_residual_blocks)
-    D_X = Discriminator(input_shape)
-    D_Y = Discriminator(input_shape)
+    G_XtoY = Generator(opt)
+    G_YtoX = Generator(opt)
+    D_X = Discriminator(opt)
+    D_Y = Discriminator(opt)
     
     print_models(G_XtoY, G_YtoX, D_X, D_Y)
     
@@ -164,7 +160,6 @@ def training_loop(train_dataloader, test_dataloader, opt):
     # Losses
     loss_GAN = torch.nn.MSELoss()
     loss_cycle = torch.nn.L1Loss()
-    loss_identity = torch.nn.L1Loss()
 
     # Optimizers
     optimizer_G = torch.optim.Adam(itertools.chain(G_XtoY.parameters(), G_YtoX.parameters()), lr = opt.lr, betas = (opt.b1, opt.b2))
@@ -180,7 +175,6 @@ def training_loop(train_dataloader, test_dataloader, opt):
     if opt.cuda:  
         loss_GAN.cuda()
         loss_cycle.cuda()
-        loss_identity.cuda()
         Tensor = torch.cuda.FloatTensor
 
     def sample_images(batches_done):
@@ -281,13 +275,8 @@ def training_loop(train_dataloader, test_dataloader, opt):
             loss_cycle_Y = loss_cycle(recov_Y, real_Y)
             loss_cycle_G = (loss_cycle_X + loss_cycle_Y) / 2
             
-            # Identity loss
-            loss_identity_X = loss_identity(G_YtoX(real_X), real_X)
-            loss_identity_Y = loss_identity(G_XtoY(real_Y), real_Y)
-            loss_identity_G = (loss_identity_X + loss_identity_Y) / 2
-            
             # Total loss
-            loss_G = loss_GAN_G + opt.lambda_cyc * loss_cycle_G + opt.lambda_id * loss_identity_G
+            loss_G = loss_GAN_G + opt.lambda_cyc * loss_cycle_G
             
             loss_G.backward()
             optimizer_G.step()
