@@ -17,13 +17,15 @@ After 260 epochs with batch size equal to 36.
 
 Fisrt row = real image from the domain X  
 Second row = fake image from the domain X to domain Y  
-Third row = real image for the domain Y  
+Third row = real image fror the domain Y  
 Fourth row = fake image from the domain Y to domain X  
 
+## Monet2Photo
 After 11 epochs with batch size equal to 1.
 
 ![cycleGAN monet2photo](https://github.com/YannickLy/DeepLearning-Project-ENSAE-2020/raw/master/Implementation/cycleGAN/monet2photo/.py/images/epoch%2011.png)  
 
+## MNIST2USPS
 After 13 epochs with batch size equal to 32.
 
 ![cycleGAN MNIST2USPS](https://github.com/YannickLy/DeepLearning-Project-ENSAE-2020/raw/master/Implementation/cycleGAN/MNIST2USPS/.py/images/epoch%2013.png)  
