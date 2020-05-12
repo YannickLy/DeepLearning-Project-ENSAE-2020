@@ -18,9 +18,9 @@ After 260 epochs with batch size equal to 36 (~5 hours running).
 # cycleGAN
 
 First row = real image from the domain X  
-Second row = fake image from the domain X to domain Y  
-Third row = real image fror the domain Y  
-Fourth row = fake image from the domain Y to domain X  
+Second row = fake image from the domain X transform to domain Y
+Third row = real image from the domain Y  
+Fourth row = fake image from the domain Y trasnform to domain X
 
 ### Monet2Photo
 After 11 epochs with batch size equal to 1 (~10 hours running).
