@@ -18,7 +18,7 @@ After 260 epochs with batch size equal to 36 (~5 hours running).
 # cycleGAN
 
 First row = real image from the domain X  
-Second row = fake image from the domain X transform to domain Y
+Second row = fake image from the domain X transform to domain Y  
 Third row = real image from the domain Y  
 Fourth row = fake image from the domain Y trasnform to domain X
 
