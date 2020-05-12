@@ -11,7 +11,7 @@ Hardware = NVIDIA RTX 2070
 
 # DCGAN
 
-After 260 epochs with batch size equal to 36.
+After 260 epochs with batch size equal to 36 (~5 hours running).
 
 ![DCGAN](https://github.com/YannickLy/DeepLearning-Project-ENSAE-2020/raw/master/Implementation/DCGAN/.py/images/epoch%20260.png)  
 
@@ -23,12 +23,12 @@ Third row = real image fror the domain Y
 Fourth row = fake image from the domain Y to domain X  
 
 ### Monet2Photo
-After 11 epochs with batch size equal to 1.
+After 11 epochs with batch size equal to 1 (~10 hours running).
 
 ![cycleGAN monet2photo](https://github.com/YannickLy/DeepLearning-Project-ENSAE-2020/raw/master/Implementation/cycleGAN/monet2photo/.py/images/epoch%2011.png)  
 
 ### MNIST2USPS
-After 13 epochs with batch size equal to 32.
+After 13 epochs with batch size equal to 32 (~5 hours running).
 
 ![cycleGAN MNIST2USPS](https://github.com/YannickLy/DeepLearning-Project-ENSAE-2020/raw/master/Implementation/cycleGAN/MNIST2USPS/.py/images/epoch%2013.png)  
 
