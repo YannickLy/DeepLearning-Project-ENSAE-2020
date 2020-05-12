@@ -15,6 +15,11 @@ After 260 epochs with batch size equal to 36.
 
 # cycleGAN
 
+Fisrt row = real image from the domain X
+Second row = fake image from the domain X to domain Y
+Third row = real image for the domain Y
+Fourth row = fake image from the domain Y to domain X
+
 After 11 epochs with batch size equal to 1.
 
 ![cycleGAN monet2photo](https://github.com/YannickLy/DeepLearning-Project-ENSAE-2020/raw/master/Implementation/cycleGAN/monet2photo/.py/images/epoch%2011.png)  
