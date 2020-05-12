@@ -15,10 +15,10 @@ After 260 epochs with batch size equal to 36.
 
 # cycleGAN
 
-Fisrt row = real image from the domain X
-Second row = fake image from the domain X to domain Y
-Third row = real image for the domain Y
-Fourth row = fake image from the domain Y to domain X
+Fisrt row = real image from the domain X  
+Second row = fake image from the domain X to domain Y  
+Third row = real image for the domain Y  
+Fourth row = fake image from the domain Y to domain X  
 
 After 11 epochs with batch size equal to 1.
 
