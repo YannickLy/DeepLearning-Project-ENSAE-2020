@@ -48,7 +48,7 @@ parser.add_argument("--n_epochs", type=int, default=1000, help = "number of epoc
 parser.add_argument("--batch_size", type=int, default=32, help="size of the batches")
 parser.add_argument("--n_cpu", type=int, default=0, help="number of cpu threads to use during batch generation") # 0 by default in windows because multiprocessing doesn't work
 # saving parameters
-parser.add_argument("--epoch", type=int, default=358, help = "epoch to start training from")
+parser.add_argument("--epoch", type=int, default=0, help = "epoch to start training from")
 parser.add_argument("--sample_interval", type=int, default=1000, help="interval between saving generator outputs")
 parser.add_argument("--checkpoint_interval", type=int, default=1, help="interval between saving model checkpoints")
 opt = parser.parse_args()
