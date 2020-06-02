@@ -1,13 +1,15 @@
 # Implementation of a DCGAN and a cycleGAN
 
+This is a homework for the course of Deep Learning ENSAE 2020 Spring. Find the instructions on: https://marcocuturi.net/dl.html
+
 The aims of this project are to implement a DCGAN and a cycleGAN.
 
-We decided to apply the DCGAN to generate anime style face.  
+In the first part of the project, we used DCGAN to generate anime style face.  
 
-We decided to apply the cycleGAN to transform real photographies to Monet's painting and to transform Monet's painting to real photographies.  
-We also tried to apply the cycleGAN to transform MNIST dataset to USPS dataset and vice versa.  
+Next, we decided to apply the cycleGAN to transform real photographies to Monet's painting and to transform Monet's painting to real photographies.  
+We also tried to carry out a cycleGAN to transform MNIST dataset to USPS dataset and vice versa.  
 
-Hardware = NVIDIA RTX 2070
+Hardware GPU = NVIDIA RTX 2070
 
 # DCGAN
 
