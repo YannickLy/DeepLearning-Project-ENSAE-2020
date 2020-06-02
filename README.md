@@ -6,7 +6,7 @@ The aims of this project are to implement a DCGAN and a cycleGAN.
 
 In the first part of the project, we used DCGAN to generate anime style face.  
 
-Next, we decided to apply the cycleGAN to transform real photographies to Monet's painting and to transform Monet's painting to real photographies. We also tried to carry out a cycleGAN to transform MNIST dataset to USPS dataset and vice versa.  
+Next, we decided to apply the cycleGAN to transform real photographies to Monet's painting and to transform Monet's painting to real photographies. We also tried to carry out a cycleGAN to transform MNIST handscripts to USPS handscripts and vice versa.  
 
 Hardware GPU = NVIDIA RTX 2070
 
